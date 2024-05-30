@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""This module contains a function that generates Pascal's triangle."""
+
+
 def pascal_triangle(n):
     """
     Generates Pascal's triangle up to the given number of rows.

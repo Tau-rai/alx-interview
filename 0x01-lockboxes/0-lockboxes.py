@@ -15,7 +15,9 @@ def canUnlockAll(boxes):
     Returns:
         bool: True if all boxes can be unlocked, False otherwise.
     """
-
+    # Check if boxes is empty
+    if not boxes:
+        return True
     # Initialize variables
     n = len(boxes)  # Total number of boxes
     opened_boxes = set()  # Set to keep track of opened boxes
@@ -32,7 +34,8 @@ def canUnlockAll(boxes):
 
             # Add keys from the current box to the stack/queue
             for key in boxes[current_box]:
-                if key not in opened_boxes:
+                # Ensure key is valid and within range
+                if 0 <= key < n and key not in opened_boxes:
                     to_open.put(key)
 
     # Check if all boxes are opened

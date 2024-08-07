@@ -51,7 +51,7 @@ def isWinner(x, nums):
         nums: an array of integers
     Returns: the name of the player that won the most rounds
     """
-    if not nums or x < 1:
+    if not nums or x < 1 or x > 10000 or any(n > 10000 for n in nums):
         return None
 
     max_n = max(nums)

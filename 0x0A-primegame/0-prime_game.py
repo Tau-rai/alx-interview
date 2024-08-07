@@ -19,33 +19,28 @@ def sieve_of_eratosthenes(n):
     return [p for p in range(n + 1) if is_prime[p]]
 
 
-def precompute_winners(max_n):
+def determine_winner(n, primes):
     """
-    Precompute the winners for all values of n up to max_n
+    Determine the winner of the game with given n and primes list
     Args:
-        max_n: the maximum value of n
-    Returns: a list of winners for each n
+        n: the number of integers
+        primes: a list of prime numbers
+    Returns: the name of the player that won the game
     """
-    primes = sieve_of_eratosthenes(max_n)
-    winners = [""] * (max_n + 1)
-    for n in range(1, max_n + 1):
-        active = [True] * (n + 1)
-        turn = 0  # Maria's turn
-        while any(active[1:]):
-            move_made = False
-            for prime in primes:
-                if prime <= n and active[prime]:
-                    move_made = True
-                    for multiple in range(prime, n + 1, prime):
-                        active[multiple] = False
-                    break
-            if not move_made:
-                winners[n] = "Ben" if turn == 0 else "Maria"
+    active = [True] * (n + 1)
+    turn = 0  # Maria's turn
+    while any(active[1:]):
+        move_made = False
+        for prime in primes:
+            if prime <= n and active[prime]:
+                move_made = True
+                for multiple in range(prime, n + 1, prime):
+                    active[multiple] = False
                 break
-            turn = 1 - turn
-        if not winners[n]:
-            winners[n] = "Ben" if turn == 0 else "Maria"
-    return winners
+        if not move_made:
+            return "Ben" if turn == 0 else "Maria"
+        turn = 1 - turn
+    return "Ben" if turn == 0 else "Maria"
 
 
 def isWinner(x, nums):
@@ -60,11 +55,12 @@ def isWinner(x, nums):
         return None
 
     max_n = max(nums)
-    winners = precompute_winners(max_n)
+    primes = sieve_of_eratosthenes(max_n)
 
     Maria_wins = Ben_wins = 0
     for n in nums:
-        if winners[n] == "Maria":
+        winner = determine_winner(n, primes)
+        if winner == "Maria":
             Maria_wins += 1
         else:
             Ben_wins += 1

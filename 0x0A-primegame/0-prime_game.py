@@ -57,7 +57,9 @@ def isWinner(x, nums):
     max_n = max(nums)
     primes = sieve_of_eratosthenes(max_n)
 
-    Maria_wins = Ben_wins = 0
+    Maria_wins = 0
+    Ben_wins = 0
+    
     for n in nums:
         winner = determine_winner(n, primes)
         if winner == "Maria":
@@ -67,7 +69,7 @@ def isWinner(x, nums):
 
     if Maria_wins > Ben_wins:
         return "Maria"
-    elif Maria_wins < Ben_wins:
+    elif Ben_wins > Maria_wins:
         return "Ben"
     else:
         return None
